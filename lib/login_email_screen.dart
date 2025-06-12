@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:invoice_d/home_screen.dart';
+import 'services/auth_service.dart';
 
 class LoginEmailScreen extends StatefulWidget {
   const LoginEmailScreen({super.key});
@@ -14,6 +15,26 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
   final correoController = TextEditingController();
   final passwordController = TextEditingController();
   bool _cargando = false;
+
+  Future<void> iniciarSesionConGoogle() async {
+    setState(() => _cargando = true);
+    final user = await AuthService().signInWithGoogle();
+    setState(() => _cargando = false);
+
+    if (!mounted) return;
+    if (user != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No se pudo completar el inicio con Google'),
+        ),
+      );
+    }
+  }
 
   Future<void> iniciarSesion() async {
     if (!_formKey.currentState!.validate()) return;
@@ -100,11 +121,21 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
               const SizedBox(height: 20),
               _cargando
                   ? const CircularProgressIndicator()
-                  : ElevatedButton.icon(
-                    onPressed: iniciarSesion,
-                    icon: const Icon(Icons.login),
-                    label: const Text('Iniciar sesión'),
-                  ),
+                  : Column(
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: iniciarSesion,
+                          icon: const Icon(Icons.login),
+                          label: const Text('Iniciar sesión'),
+                        ),
+                        const SizedBox(height: 10),
+                        OutlinedButton(
+                          onPressed: iniciarSesionConGoogle,
+                          child:
+                              const Text('Iniciar sesión con Google'),
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),

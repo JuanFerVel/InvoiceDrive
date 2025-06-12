@@ -8,9 +8,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'services/auth_service.dart';
 import 'registro_manual_screen.dart';
-import 'services/auth_service.dart';
-
-import 'home_screen.dart';
 import 'login_email_screen.dart';
 
 void main() async {
@@ -269,26 +266,31 @@ class WelcomeScreen  extends StatelessWidget {
                     child: const Text('Iniciar sesión'),
                   ),
                   const SizedBox(height: 10),
-                  // OutlinedButton(
-                  //   onPressed: () async {
-                  //     final user = await AuthService().signInWithGoogle();
-                  //     if (user != null) {
-                  //       Navigator.pushReplacement(
-                  //         context,
-                  //         MaterialPageRoute(builder: (_) => const HomeScreen()),
-                  //       );
-                  //     } else {
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         const SnackBar(
-                  //           content: Text(
-                  //             'No se pudo completar el inicio con Google',
-                  //           ),
-                  //         ),
-                  //       );
-                  //     }
-                  //   },
-                  //   child: const Text('Iniciar sesión con Google'),
-                  // ),
+                  OutlinedButton(
+                    onPressed: () async {
+                      final user = await AuthService().signInWithGoogle();
+                      if (user != null) {
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const HomeScreen(),
+                            ),
+                          );
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('No se pudo completar el inicio con Google'),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: const Text('Iniciar sesión con Google'),
+                  ),
 
                   const SizedBox(height: 30),
 
@@ -308,26 +310,31 @@ class WelcomeScreen  extends StatelessWidget {
                     child: const Text('Registrarse'),
                   ),
                   const SizedBox(height: 10),
-                  // OutlinedButton(
-                  //   onPressed: () async {
-                  //     final user = await AuthService().signInWithGoogle();
-                  //     if (user != null) {
-                  //       Navigator.pushReplacement(
-                  //         context,
-                  //         MaterialPageRoute(builder: (_) => const HomeScreen()),
-                  //       );
-                  //     } else {
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         const SnackBar(
-                  //           content: Text(
-                  //             'No se pudo completar el inicio con Google',
-                  //           ),
-                  //         ),
-                  //       );
-                  //     }
-                  //   },
-                  //   child: const Text('Registrarse con Google'),
-                  // ),
+                  OutlinedButton(
+                    onPressed: () async {
+                      final user = await AuthService().signInWithGoogle();
+                      if (user != null) {
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const HomeScreen(),
+                            ),
+                          );
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('No se pudo completar el inicio con Google'),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: const Text('Registrarse con Google'),
+                  ),
                 ],
               ),
             ),

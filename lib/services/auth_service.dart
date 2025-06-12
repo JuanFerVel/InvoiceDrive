@@ -44,7 +44,6 @@ class AuthService {
       print('❌ Error en login con Google: $e');
       print(e);
       return null;
-      return null;
     }
   }
 }
